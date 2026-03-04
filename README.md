@@ -80,7 +80,7 @@ npm install
 
 ```
 PORT=5000
-MONGO_URI=mongodb+srv://fintrackuser:fintrack1120sneha@cluster0.swcnbvx.mongodb.net/?appName=Cluster0
+MONGO_URI=""
 ```
 
 ---
