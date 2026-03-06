@@ -43,3 +43,23 @@ exports.deleteExpense = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+exports.updateExpense = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedExpense = await Expense.findByIdAndUpdate(
+      id,
+      req.body,
+       { returnDocument: "after" }
+    );
+
+    if (!updatedExpense) {
+      return res.status(404).json({ message: "Expense not found" });
+    }
+
+    res.status(200).json(updatedExpense);
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
