@@ -1,13 +1,14 @@
-
 # 💰 FinTrack – Personal Finance Tracker
 
-FinTrack is a **full-stack personal finance application** designed for students and working professionals to track expenses, manage budgets, and understand spending habits.
+FinTrack is a **full-stack personal finance application** designed for students and working professionals to track expenses, manage budgets, and analyze spending habits.
 
-This project is being built step-by-step to learn **Full-Stack Development + Basic Machine Learning** while creating a **real, deployable product**.
+This project is being built step-by-step to learn **Full-Stack Development + Basic Machine Learning** while creating a **real deployable product**.
+
+---
 
 # 🚀 Tech Stack
 
-### Frontend
+### Frontend (Coming Soon)
 
 * React (Vite)
 * TailwindCSS
@@ -32,22 +33,24 @@ This project is being built step-by-step to learn **Full-Stack Development + Bas
 # 📂 Project Structure
 
 ```
-fintrack-fullstack-app/
+fintrack/
 │
-├── client/              # React Frontend
-│
-├── server/              # Node.js Backend
+├── server
 │   │
-│   ├── config/
-│   │   └── db.js        # MongoDB connection
+│   ├── config
+│   │   └── db.js
 │   │
-│   ├── models/
+│   ├── models
+│   │   └── Expense.js
 │   │
-│   ├── controllers/
+│   ├── controllers
+│   │   └── expenseController.js
 │   │
-│   ├── routes/
+│   ├── routes
+│   │   └── expenseRoutes.js
 │   │
-│   └── index.js         # Express server entry point
+│   ├── .env
+│   └── index.js
 │
 └── README.md
 ```
@@ -59,11 +62,8 @@ fintrack-fullstack-app/
 ### 1️⃣ Clone the repository
 
 ```
-git clone https://github.com/Sneha-Srivastava11/fintrack-fullstack-app.git
-```
-
-```
-cd fintrack-fullstack-app/server
+git clone https://github.com/YOUR_USERNAME/fintrack.git
+cd fintrack/server
 ```
 
 ---
@@ -76,16 +76,18 @@ npm install
 
 ---
 
-### 3️⃣ Create `.env` file inside **server**
+### 3️⃣ Create `.env` file
+
+Inside the `server` folder create:
 
 ```
 PORT=5000
-MONGO_URI=""
+MONGO_URI=your_mongodb_connection_string
 ```
 
 ---
 
-### 4️⃣ Run the backend server
+### 4️⃣ Run the backend
 
 ```
 npm run dev
@@ -99,69 +101,114 @@ http://localhost:5000
 
 ---
 
-# 📡 Current API
+# 📡 API Endpoints
 
-### Health Check
+### Create Expense
 
 ```
-GET /
+POST /api/expenses
 ```
 
-Response:
+Example request body:
 
 ```
 {
- "message": "FinTrack API running 🚀"
+ "title": "Groceries",
+ "amount": 1200,
+ "category": "Food"
 }
 ```
 
 ---
 
-# 🛠 Features (Planned)
+### Get All Expenses
 
-* Add expense
-* Edit expense
-* Delete expense
-* Expense categories
-* Monthly budget planning
-* Spending analytics dashboard
-* ML-based expense categorization
-* Spending prediction
+```
+GET /api/expenses
+```
+
+Returns all saved expenses from MongoDB.
 
 ---
 
-# 🎯 Learning Goals
+### Update Expense
 
-This project is focused on learning:
+```
+PUT /api/expenses/:id
+```
 
-* Full-Stack development
-* REST API design
-* Database modeling
-* Clean backend architecture
-* Deployment
-* Basic ML integration
+Updates an existing expense.
+
+---
+
+### Delete Expense
+
+```
+DELETE /api/expenses/:id
+```
+
+Deletes an expense from the database.
+
+---
+
+# 📊 Example Expense Document
+
+```
+{
+ "_id": "684c2a8e6d23b45c8d91b234",
+ "title": "Groceries",
+ "amount": 1200,
+ "category": "Food",
+ "date": "2026-03-04"
+}
+```
 
 ---
 
 # 📅 Development Log
 
-Day 1
+## Day 1
 
 * Project repository created
 * Express backend initialized
+* Environment variables configured
 * MongoDB Atlas connected
-* Environment configuration setup
 
-More features coming soon.
+## Day 2
+
+* Implemented Expense data model using Mongoose
+* Built REST API for expense management
+* Added CRUD operations:
+
+  * Create expense
+  * Fetch expenses
+  * Update expense
+  * Delete expense
+* Tested APIs using Thunder Client
 
 ---
 
-# 📌 Future Improvements
+# 🎯 Learning Goals
 
-* Authentication system
-* Dashboard analytics
-* Expense charts
-* ML predictions
+This project focuses on learning:
+
+* Full-Stack development
+* REST API design
+* MongoDB data modeling
+* Clean backend architecture
+* Git workflow and version control
+* Deployment practices
+
+---
+
+# 📌 Upcoming Features
+
+* React frontend dashboard
+* Expense form UI
+* Expense list with edit/delete
+* Budget planning feature
+* Data visualization (charts)
+* ML-based expense categorization
 * Deployment (Render + Vercel)
 
 ---
