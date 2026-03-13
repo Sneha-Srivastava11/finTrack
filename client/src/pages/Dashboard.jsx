@@ -6,6 +6,7 @@ import ExpenseChart from "../components/ExpenseChart";
 function Dashboard() {
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
+  const [filterCategory, setFilterCategory] = useState("");
   const fetchExpenses = async () => {
     try {
       const res = await getExpenses();
@@ -27,7 +28,10 @@ function Dashboard() {
   useEffect(() => {
     fetchExpenses();
   }, []);
-
+  const filteredExpenses = expenses.filter((expense) => {
+  if (!filterCategory) return true;
+  return expense.category === filterCategory;
+});
   return (
     <div style={{ padding: "20px" }}>
       <h1>Expense Dashboard</h1>
@@ -39,13 +43,24 @@ function Dashboard() {
 />
 
       <ExpenseChart expenses={expenses} />
+      <h3>Filter Expenses</h3>
+
+<select
+  value={filterCategory}
+  onChange={(e) => setFilterCategory(e.target.value)}
+>
+  <option value="">All Categories</option>
+  <option value="grocery">Grocery</option>
+  <option value="travel">Travel</option>
+  <option value="food">Food</option>
+</select>
 
       <h2>All Expenses</h2>
 
       {expenses.length === 0 ? (
         <p>No expenses added yet.</p>
       ) : (
-        expenses.map((expense) => (
+        filteredExpenses.map((expense) => (
           <div
             key={expense._id}
             style={{
