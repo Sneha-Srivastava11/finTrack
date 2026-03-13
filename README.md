@@ -187,7 +187,7 @@ Deletes an expense from the database.
 * Tested APIs using Thunder Client
 
 ---
-
+Day 3
 # 🎯 Learning Goals
 
 This project focuses on learning:
