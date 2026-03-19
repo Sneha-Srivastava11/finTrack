@@ -2,17 +2,28 @@ import axios from "axios";
 
 const API_BASE_URL = "http://localhost:5000/api";
 
-export const getExpenses = () => axios.get(`${API_BASE_URL}/expenses`);
+// Create axios instance (scalable for future)
+const API = axios.create({
+  baseURL: API_BASE_URL,
+});
+
+// ================== EXPENSE APIs ==================
+
+export const getExpenses = () => API.get("/expenses");
 
 export const createExpense = (expense) =>
-  axios.post(`${API_BASE_URL}/expenses`, expense);
+  API.post("/expenses", expense);
 
 export const updateExpense = (id, expense) =>
-  axios.put(`${API_BASE_URL}/expenses/${id}`, expense);
+  API.put(`/expenses/${id}`, expense);
 
 export const deleteExpense = (id) =>
-  axios.delete(`${API_BASE_URL}/expenses/${id}`);
-export const getMonthlyExpenses = async () => {
-  const res = await fetch("http://localhost:5000/api/expenses/monthly");
-  return res.json();
-};
+  API.delete(`/expenses/${id}`);
+
+// ================== ANALYTICS APIs ==================
+
+export const getMonthlyExpenses = () =>
+  API.get("/expenses/monthly");
+
+export const getExpenseSummary = () =>
+  API.get("/expenses/summary");

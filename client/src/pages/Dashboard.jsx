@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getExpenses, deleteExpense } from "../services/api";
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseChart from "../components/ExpenseChart";
+import SummaryCards from "../components/SummaryCards";
 
 function Dashboard() {
   const [expenses, setExpenses] = useState([]);
@@ -35,7 +36,7 @@ function Dashboard() {
     fetchExpenses();
   }, []);
 
-  // ✅ Filter logic (corrected)
+  // ✅ Filter logic
   const filteredExpenses =
     filterCategory === "All"
       ? expenses
@@ -53,6 +54,9 @@ function Dashboard() {
 
       <h1 className="text-3xl font-bold mb-6">Expense Dashboard</h1>
 
+      {/* ✅ Summary Cards (CONNECTED TO STATE) */}
+      <SummaryCards expenses={expenses} />
+
       {/* Expense Form */}
       <div className="bg-white p-6 rounded-lg shadow mb-6">
         <ExpenseForm
@@ -67,7 +71,7 @@ function Dashboard() {
         <ExpenseChart expenses={expenses} />
       </div>
 
-      {/* ✅ Dynamic Filter */}
+      {/* Filter */}
       <div className="mb-4">
         <label className="mr-3 font-semibold">Filter by Category:</label>
 
