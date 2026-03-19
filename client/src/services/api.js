@@ -12,3 +12,7 @@ export const updateExpense = (id, expense) =>
 
 export const deleteExpense = (id) =>
   axios.delete(`${API_BASE_URL}/expenses/${id}`);
+export const getMonthlyExpenses = async () => {
+  const res = await fetch("http://localhost:5000/api/expenses/monthly");
+  return res.json();
+};

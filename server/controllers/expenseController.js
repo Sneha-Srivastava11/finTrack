@@ -63,3 +63,24 @@ exports.updateExpense = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+
+exports.getMonthlyExpenses = async (req, res) => {
+  try {
+    const data = await Expense.aggregate([
+      {
+        $group: {
+          _id: { $month: "$date" },
+          total: { $sum: "$amount" }
+        }
+      },
+      {
+        $sort: { _id: 1 }
+      }
+    ]);
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

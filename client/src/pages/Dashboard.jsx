@@ -4,11 +4,14 @@ import ExpenseForm from "../components/ExpenseForm";
 import ExpenseChart from "../components/ExpenseChart";
 
 function Dashboard() {
-
   const [expenses, setExpenses] = useState([]);
   const [editingExpense, setEditingExpense] = useState(null);
-  const [filterCategory, setFilterCategory] = useState("");
+  const [filterCategory, setFilterCategory] = useState("All");
 
+  // ✅ Dynamic categories
+  const categories = ["All", ...new Set(expenses.map(e => e.category))];
+
+  // ✅ Fetch expenses
   const fetchExpenses = async () => {
     try {
       const res = await getExpenses();
@@ -18,6 +21,7 @@ function Dashboard() {
     }
   };
 
+  // ✅ Delete expense
   const handleDelete = async (id) => {
     try {
       await deleteExpense(id);
@@ -31,10 +35,18 @@ function Dashboard() {
     fetchExpenses();
   }, []);
 
-  const filteredExpenses = expenses.filter((expense) => {
-    if (!filterCategory) return true;
-    return expense.category === filterCategory;
-  });
+  // ✅ Filter logic (corrected)
+  const filteredExpenses =
+    filterCategory === "All"
+      ? expenses
+      : expenses.filter(
+          (expense) =>
+            expense.category.toLowerCase() === filterCategory.toLowerCase()
+        );
+
+  // ✅ Capitalize helper
+  const formatCategory = (cat) =>
+    cat.charAt(0).toUpperCase() + cat.slice(1);
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -55,7 +67,7 @@ function Dashboard() {
         <ExpenseChart expenses={expenses} />
       </div>
 
-      {/* Filter */}
+      {/* ✅ Dynamic Filter */}
       <div className="mb-4">
         <label className="mr-3 font-semibold">Filter by Category:</label>
 
@@ -64,19 +76,19 @@ function Dashboard() {
           onChange={(e) => setFilterCategory(e.target.value)}
           className="border p-2 rounded"
         >
-          <option value="">All</option>
-          <option value="grocery">Grocery</option>
-          <option value="travel">Travel</option>
-          <option value="food">Food</option>
+          {categories.map((cat, index) => (
+            <option key={index} value={cat}>
+              {formatCategory(cat)}
+            </option>
+          ))}
         </select>
       </div>
 
       {/* Expense List */}
-
       <h2 className="text-xl font-semibold mb-4">All Expenses</h2>
 
       {filteredExpenses.length === 0 ? (
-        <p className="text-gray-500">No expenses added yet.</p>
+        <p className="text-gray-500">No expenses found.</p>
       ) : (
         filteredExpenses.map((expense) => (
           <div
@@ -86,12 +98,11 @@ function Dashboard() {
             <div>
               <p className="font-semibold">{expense.title}</p>
               <p className="text-gray-500">
-                ₹{expense.amount} • {expense.category}
+                ₹{expense.amount} • {formatCategory(expense.category)}
               </p>
             </div>
 
             <div className="flex gap-2">
-
               <button
                 onClick={() => setEditingExpense(expense)}
                 className="bg-blue-500 text-white px-3 py-1 rounded"
@@ -105,12 +116,10 @@ function Dashboard() {
               >
                 Delete
               </button>
-
             </div>
           </div>
         ))
       )}
-
     </div>
   );
 }
