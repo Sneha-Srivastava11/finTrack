@@ -8,7 +8,7 @@ This project is being built step-by-step to learn **Full-Stack Development + Bas
 
 # 🚀 Tech Stack
 
-### Frontend (Coming Soon)
+### Frontend
 
 * React (Vite)
 * TailwindCSS
